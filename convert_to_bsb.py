@@ -103,19 +103,19 @@ def imgkap():
    else:
       return "imgkap.exe"
    
-def pngrequant():
+def pngquant():
    sysname, nodename, release, version, machine = os.uname()
    if sysname == "Linux":
-      return "pngrequant"
+      return "pngquant"
    else:
-      return "pngrequant.exe"
+      return "pngquant.exe"
 
   
 #------------------------------------
 def convertChartListGDAL(chartlist):
 
   imgkapbin=imgkap()
-  pngrequantbin=pngrequant()
+  pngquantbin=pngquant()
   for chart in chartlist:
   
     dataset = gdal.Open( chart, gdal.GA_ReadOnly )
@@ -143,7 +143,7 @@ def convertChartListGDAL(chartlist):
     log("raster: ullat=%f ullon=%f lrlat=%f lrlon=%f"% (geotr[3],geotr[0],lrlat,lrlon))
     (lrlon,lrlat,z)=transformer.TransformPoint(lrlon,lrlat,0)
     if chart.lower().endswith(".png"):
-      cmd="%s 127 -f --ext .png %s" % (pngrequant,chart)
+      cmd="%s 127 -f --ext .png %s" % (pngquant,chart)
       log("running "+cmd)
       os.system(cmd) 
     cmd="%s %s %f %f %f %f"% (imgkapbin,chart,ullat,ullon,lrlat,lrlon)
@@ -163,6 +163,7 @@ def metersToLonLat(mx,my):
 #------------------------------------
 def convertChartListDirect(chartlist):
   imgkapbin=imgkap()
+  pngquantbin=pngquant()
   for chart in chartlist:
     log("direct "+chart)
     f=open(chart, "rb")
@@ -212,7 +213,7 @@ def convertChartListDirect(chartlist):
     (ullon,ullat)=metersToLonLat(ulx, uly)
     (lrlon,lrlat)=metersToLonLat(lrx, lry)
     if chart.lower().endswith(".png"):
-      cmd="%s 127 -f --ext .png %s" % (pngrequant,chart)
+      cmd="%s 127 -f --ext .png %s" % (pngquant,chart)
       log("running "+cmd)
       os.system(cmd)
     cmd="%s %s %f %f %f %f"% (imgkapbin,chart,ullat,ullon,lrlat,lrlon)
