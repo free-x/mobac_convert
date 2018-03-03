@@ -143,11 +143,11 @@ def convertChartListGDAL(chartlist):
     log("raster: ullat=%f ullon=%f lrlat=%f lrlon=%f"% (geotr[3],geotr[0],lrlat,lrlon))
     (lrlon,lrlat,z)=transformer.TransformPoint(lrlon,lrlat,0)
     if chart.lower().endswith(".png"):
-      cmd="%s 127 -f --ext .png %s" % (pngquant,chart)
-      log("running "+cmd)
+      cmd="$(which %s) 127 -f --ext .png %s" % (pngquantbin,chart)
+      log("running: %s " % cmd)
       os.system(cmd) 
     cmd="%s %s %f %f %f %f"% (imgkapbin,chart,ullat,ullon,lrlat,lrlon)
-    log("running "+cmd)
+    log("running: %s " % cmd)
     os.system(cmd)
 
 #from gdal2tiles.py
@@ -213,11 +213,11 @@ def convertChartListDirect(chartlist):
     (ullon,ullat)=metersToLonLat(ulx, uly)
     (lrlon,lrlat)=metersToLonLat(lrx, lry)
     if chart.lower().endswith(".png"):
-      cmd="%s 127 -f --ext .png %s" % (pngquant,chart)
-      log("running "+cmd)
+      cmd="%s 127 -f --ext .png %s" % (pngquantbin,chart)
+      log("running %s" % cmd)
       os.system(cmd)
     cmd="%s %s %f %f %f %f"% (imgkapbin,chart,ullat,ullon,lrlat,lrlon)
-    log("running "+cmd)
+    log("running %s" % cmd)
     os.system(cmd)
       
  
