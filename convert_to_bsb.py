@@ -106,7 +106,8 @@ def imgkap():
   
 #------------------------------------
 def convertChartListGDAL(chartlist):
-  
+
+  imgkapbin=imgkap()
   for chart in chartlist:
   
     dataset = gdal.Open( chart, gdal.GA_ReadOnly )
@@ -133,7 +134,7 @@ def convertChartListGDAL(chartlist):
     (lrlon,lrlat)=gdal.ApplyGeoTransform(geotr,dataset.RasterXSize,dataset.RasterYSize)
     log("raster: ullat=%f ullon=%f lrlat=%f lrlon=%f"% (geotr[3],geotr[0],lrlat,lrlon))
     (lrlon,lrlat,z)=transformer.TransformPoint(lrlon,lrlat,0)
-    cmd="%s %s %f %f %f %f"% (imgkap(),chart,ullat,ullon,lrlat,lrlon)
+    cmd="%s %s %f %f %f %f"% (imgkapbin,chart,ullat,ullon,lrlat,lrlon)
     log("running "+cmd)
     os.system(cmd)
 
@@ -149,7 +150,7 @@ def metersToLonLat(mx,my):
       
 #------------------------------------
 def convertChartListDirect(chartlist):
-  
+  imgkapbin=imgkap()
   for chart in chartlist:
     log("direct "+chart)
     f=open(chart, "rb")
@@ -198,7 +199,7 @@ def convertChartListDirect(chartlist):
     log(chart+" raster: ullat=%f ullon=%f lrlat=%f lrlon=%f"% (uly,ulx,lry,lrx))
     (ullon,ullat)=metersToLonLat(ulx, uly)
     (lrlon,lrlat)=metersToLonLat(lrx, lry)
-    cmd="imgkap.exe %s %f %f %f %f"% (chart,ullat,ullon,lrlat,lrlon)
+    cmd="%s %s %f %f %f %f"% (imgkapbin,chart,ullat,ullon,lrlat,lrlon)
     log("running "+cmd)
     os.system(cmd)
       
