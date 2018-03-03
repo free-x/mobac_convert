@@ -143,7 +143,7 @@ def convertChartListGDAL(chartlist):
     log("raster: ullat=%f ullon=%f lrlat=%f lrlon=%f"% (geotr[3],geotr[0],lrlat,lrlon))
     (lrlon,lrlat,z)=transformer.TransformPoint(lrlon,lrlat,0)
     if chart.lower().endswith(".png"):
-      cmd="$(which %s) 127 -f --ext .png %s" % (pngquantbin,chart)
+      cmd="%s 127 -f --ext .png %s" % (pngquantbin,chart)
       log("running: %s " % cmd)
       os.system(cmd) 
     cmd="%s %s %f %f %f %f"% (imgkapbin,chart,ullat,ullon,lrlat,lrlon)
