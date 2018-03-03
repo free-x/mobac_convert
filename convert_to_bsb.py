@@ -103,11 +103,19 @@ def imgkap():
    else:
       return "imgkap.exe"
    
+def pngrequant():
+   sysname, nodename, release, version, machine = os.uname()
+   if sysname == "Linux":
+      return "pngrequant"
+   else:
+      return "pngrequant.exe"
+
   
 #------------------------------------
 def convertChartListGDAL(chartlist):
 
   imgkapbin=imgkap()
+  pngrequantbin=pngrequant()
   for chart in chartlist:
   
     dataset = gdal.Open( chart, gdal.GA_ReadOnly )
@@ -134,6 +142,10 @@ def convertChartListGDAL(chartlist):
     (lrlon,lrlat)=gdal.ApplyGeoTransform(geotr,dataset.RasterXSize,dataset.RasterYSize)
     log("raster: ullat=%f ullon=%f lrlat=%f lrlon=%f"% (geotr[3],geotr[0],lrlat,lrlon))
     (lrlon,lrlat,z)=transformer.TransformPoint(lrlon,lrlat,0)
+    if chart.lower().endswith(".png"):
+      cmd="%s 127 -f --ext .png %s" % (pngrequant,chart)
+      log("running "+cmd)
+      os.system(cmd) 
     cmd="%s %s %f %f %f %f"% (imgkapbin,chart,ullat,ullon,lrlat,lrlon)
     log("running "+cmd)
     os.system(cmd)
@@ -199,6 +211,10 @@ def convertChartListDirect(chartlist):
     log(chart+" raster: ullat=%f ullon=%f lrlat=%f lrlon=%f"% (uly,ulx,lry,lrx))
     (ullon,ullat)=metersToLonLat(ulx, uly)
     (lrlon,lrlat)=metersToLonLat(lrx, lry)
+    if chart.lower().endswith(".png"):
+      cmd="%s 127 -f --ext .png %s" % (pngrequant,chart)
+      log("running "+cmd)
+      os.system(cmd)
     cmd="%s %s %f %f %f %f"% (imgkapbin,chart,ullat,ullon,lrlat,lrlon)
     log("running "+cmd)
     os.system(cmd)
