@@ -24,13 +24,16 @@ add GDAL_DATA to env GDAL_DATA=c:\Program Files\GDAL\gdal-data
 2. download imgkap.exe
 http://www.dacust.com/inlandwaters/imgkap/
 
-3. the python script
+3. download pngquant.exe
+https://pngquant.org/
+
+4. the python script
 
 You can find the script also at http://www.wellenvogel.net/software/bsb_from_moac/index.php
 
-4. On Linux Systems you need to compile imgkap by your own - but this is easy (Thanks to Oleg for his description)
+5. On Linux Systems you need to compile imgkap by your own - but this is easy (Thanks to Oleg for his description)
 
-sudo aptitude install git gcc python-gdal libfreeimage-dev
+sudo aptitude install git gcc python-gdal libfreeimage-dev pngquant
 
 git clone https://github.com/nohal/imgkap.git
 
